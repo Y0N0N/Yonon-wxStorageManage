@@ -476,6 +476,13 @@ npm install
 
 ---
 
+## 项目信息
+
+- **作者：** 韦永昌（Yonon）
+- **开源地址：** [Yonon-wxStorageManage](https://github.com/Y0N0N/Yonon-wxStorageManage)
+
+---
+
 ## License
 
 MIT
