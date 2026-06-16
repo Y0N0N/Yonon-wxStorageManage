@@ -395,7 +395,7 @@ Haili/                          # 项目根目录
 ### 前置条件
 
 - [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
-- 微信小程序 AppID（项目已配置：`wxd1bde267872a370a`）
+- 微信小程序 AppID（在微信公众平台申请）
 
 ### 运行步骤
 
@@ -469,7 +469,7 @@ npm install
 项目配置了完整的 AI 开发约束体系，使用时优先读取：
 
 ```
-1️⃣ .agents/AGENTS.md        ← 微信小程序硬性规范（最高优先级）
+1️⃣ AGENTS.md        ← 微信小程序硬性规范（最高优先级）
 2️⃣ Haili/_guide/goal.md      ← 产品目标与功能定义
 3️⃣ Haili/_guide/skills.md    ← 开发技能与工作方式
 ```
