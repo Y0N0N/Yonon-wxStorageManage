@@ -474,9 +474,11 @@ Haili/                          # 项目根目录
 
 - **作者：** 韦永昌（Yonon）
 - **开源地址：** [Yonon-wxStorageManage](https://github.com/Y0N0N/Yonon-wxStorageManage)
+- **联系邮箱：** yonon681@gmail.com
 
 ---
 
 ## License
 
+麻烦点个免费的star/(ㄒoㄒ)/~~
 MIT
