@@ -1,3 +1,7 @@
+/**
+ * Haili 物资管理助手
+ * 作者：韦永昌（Yonon） | https://github.com/Y0N0N/Yonon-wxStorageManage
+ */
 // pages/borrow-list/index.ts
 import { requireAuth, isAssistant } from '../../services/auth.service';
 import { ActivityService, ActivityItemService, MaterialService, formatTime, parseDate, getWeekDay } from '../../services/storage.service';

@@ -1,3 +1,7 @@
+/**
+ * Haili 物资管理助手
+ * 作者：韦永昌（Yonon） | https://github.com/Y0N0N/Yonon-wxStorageManage
+ */
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1

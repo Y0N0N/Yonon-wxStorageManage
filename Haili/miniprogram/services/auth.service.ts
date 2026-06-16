@@ -1,5 +1,6 @@
 // ============================================================
 // Haili 物资管理小程序 — 认证与权限服务
+// 作者：韦永昌（Yonon） | https://github.com/Y0N0N/Yonon-wxStorageManage
 // ============================================================
 
 import type { User, UserRole } from '../models/index';

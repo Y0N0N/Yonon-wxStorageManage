@@ -1,5 +1,6 @@
 // ============================================================
 // Haili 物资管理小程序 — 操作日志服务
+// 作者：韦永昌（Yonon） | https://github.com/Y0N0N/Yonon-wxStorageManage
 // ============================================================
 
 import type { OperationLog, OperationType, Material, Activity } from '../models/index';

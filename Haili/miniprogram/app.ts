@@ -1,3 +1,9 @@
+/**
+ * ============================================================
+ * Haili 物资管理助手 — 微信小程序
+ * 作者：韦永昌（Yonon） | https://github.com/Y0N0N/Yonon-wxStorageManage
+ * ============================================================
+ */
 // app.ts
 import { seedDefaultData } from './services/storage.service';
 

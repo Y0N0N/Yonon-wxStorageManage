@@ -1,12 +1,12 @@
 {
-  "name": "miniprogram-ts-sass-quickstart",
+  "name": "haili-wx-storage-manage",
   "version": "1.0.0",
-  "description": "",
+  "description": "Haili 物资管理助手 — 作者：韦永昌（Yonon）",
   "scripts": {
   },
   "keywords": [],
-  "author": "",
-  "license": "",
+  "author": "韦永昌（Yonon） <https://github.com/Y0N0N>",
+  "license": "MIT",
   "dependencies": {
   },
   "devDependencies": {
