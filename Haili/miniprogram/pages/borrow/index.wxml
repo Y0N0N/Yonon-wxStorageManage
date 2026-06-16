@@ -1,0 +1,139 @@
+<scroll-view class="page" scroll-y="true">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="goBack"><text>‹ 返回</text></view>
+    <text class="nav-title">借出物资</text>
+    <view class="nav-right"></view>
+  </view>
+
+  <view class="content">
+    <!-- 活动名称 -->
+    <view class="form-group">
+      <text class="form-label">活动名称 <text class="required">*</text></text>
+      <input cursor-spacing="300" class="form-input" type="text" placeholder='如："华园盛夏长，一别向骄阳"——毕业歌会' placeholder-class="ph"
+        value="{{form.activityName}}" data-field="activityName" bindinput="onFieldInput" />
+    </view>
+
+    <!-- 举办时间 - picker -->
+    <view class="form-group">
+      <text class="form-label">举办时间 <text class="required">*</text></text>
+      <picker mode="date" value="{{form.holdDate}}" bindchange="onHoldDateChange">
+        <view class="form-select">
+          <text wx:if="{{form.holdDate}}">{{form.holdDate}}</text>
+          <text wx:else class="ph-text">请选择日期</text>
+          <text class="arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 主办单位 -->
+    <view class="form-group">
+      <text class="form-label">主办单位 <text class="required">*</text></text>
+      <input cursor-spacing="300" class="form-input" type="text" placeholder="如：校团委" placeholder-class="ph"
+        value="{{form.organizer}}" data-field="organizer" bindinput="onFieldInput" />
+    </view>
+
+    <!-- 申请单位 / 借用人 -->
+    <view class="form-group">
+      <text class="form-label">申请单位 <text class="required">*</text></text>
+      <input cursor-spacing="300" class="form-input" type="text" placeholder="如：体育部" placeholder-class="ph"
+        value="{{form.borrower}}" data-field="borrower" bindinput="onFieldInput" />
+    </view>
+
+    <!-- 物资用途（非必填） -->
+    <view class="form-group">
+      <text class="form-label">物资用途</text>
+      <input cursor-spacing="300" class="form-input" type="text" placeholder="物资用途说明" placeholder-class="ph"
+        value="{{form.note}}" data-field="note" bindinput="onFieldInput" />
+    </view>
+
+    <!-- 联系人 -->
+    <view class="form-group">
+      <text class="form-label">联系人 <text class="required">*</text></text>
+      <input cursor-spacing="300" class="form-input" type="text" placeholder="如：小张" placeholder-class="ph"
+        value="{{form.contactPerson}}" data-field="contactPerson" bindinput="onFieldInput" />
+    </view>
+
+    <!-- 联系方式 -->
+    <view class="form-group">
+      <text class="form-label">联系方式 <text class="required">*</text></text>
+      <input cursor-spacing="300" class="form-input" type="text" placeholder="如：13800001111" placeholder-class="ph"
+        value="{{form.contactPhone}}" data-field="contactPhone" bindinput="onFieldInput" />
+    </view>
+
+    <!-- 负责人 -->
+    <view class="form-group">
+      <text class="form-label">负责人 <text class="required">*</text></text>
+      <input cursor-spacing="300" class="form-input" type="text" placeholder="负责老师姓名" placeholder-class="ph"
+        value="{{form.responsiblePerson}}" data-field="responsiblePerson" bindinput="onFieldInput" />
+    </view>
+
+    <!-- 预计归还日期 - picker -->
+    <view class="form-group">
+      <text class="form-label">预计归还日期 <text class="required">*</text></text>
+      <picker mode="date" value="{{form.expectedReturnDate}}" bindchange="onReturnDateChange">
+        <view class="form-select">
+          <text wx:if="{{form.expectedReturnDate}}">{{form.expectedReturnDate}}</text>
+          <text wx:else class="ph-text">请选择日期</text>
+          <text class="arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 物资选择 -->
+    <view class="form-group">
+      <text class="form-label">物资清单 <text class="required">*</text>
+        <text class="hint" wx:if="{{selectedMaterials.length > 0}}">（已选 {{selectedMaterials.length}} 种）</text>
+      </text>
+      <view class="form-select" bindtap="togglePicker">
+        <text wx:if="{{selectedMaterials.length === 0}}" class="ph-text">点击选择物资...</text>
+        <text wx:else>已选择 {{selectedMaterials.length}} 种物资</text>
+        <text class="arrow">▼</text>
+      </view>
+    </view>
+
+    <!-- 已选物资列表 -->
+    <view class="selected-list" wx:if="{{selectedMaterials.length > 0}}">
+      <view class="selected-item" wx:for="{{selectedMaterials}}" wx:key="id">
+        <view class="selected-info">
+          <text class="selected-name">{{item.materialName}}</text>
+          <text class="selected-unit">(库存 {{item.maxQuantity}}{{item.unit}})</text>
+        </view>
+        <view class="selected-controls">
+          <input cursor-spacing="300" class="qty-input" type="number" value="{{item.quantity}}"
+            data-id="{{item.id}}" bindinput="onSelectedQuantityInput" />
+          <text class="selected-unit-text">{{item.unit}}</text>
+          <text class="remove-btn" data-id="{{item.id}}" bindtap="removeSelected">✕</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 物资选择器 -->
+    <view class="picker-panel {{showPicker ? 'visible' : ''}}">
+      <scroll-view scroll-y="true" class="picker-scroll">
+        <view class="picker-item" wx:for="{{materials}}" wx:key="id"
+          data-id="{{item.id}}" bindtap="selectMaterial">
+          <view class="picker-left">
+            <text class="picker-name">{{item.name}}</text>
+            <text class="picker-stock">在库: {{item.currentStock}}{{item.unit}}</text>
+          </view>
+          <text class="picker-spec" wx:if="{{item.spec}}">{{item.spec}}</text>
+        </view>
+        <view class="picker-empty" wx:if="{{materials.length === 0}}">
+          <text>暂无库存物资</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 备注（非必填） -->
+    <view class="form-group">
+      <text class="form-label">备注</text>
+      <input cursor-spacing="300" class="form-input" type="text" placeholder="其他需要备注的信息" placeholder-class="ph"
+        value="{{form.extraNote}}" data-field="extraNote" bindinput="onFieldInput" />
+    </view>
+
+    <!-- 提交 -->
+    <button class="submit-btn" bindtap="onSubmit" disabled="{{saving}}">
+      {{saving ? '提交中...' : '确认借出'}}
+    </button>
+  </view>
+</scroll-view>

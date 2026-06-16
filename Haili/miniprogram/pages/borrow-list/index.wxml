@@ -1,0 +1,146 @@
+<scroll-view class="page" scroll-y="true">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="goBack"><text>‹ 返回</text></view>
+    <text class="nav-title">借出/归还</text>
+    <view class="nav-right"></view>
+  </view>
+
+  <!-- Tab -->
+  <view class="tabs">
+    <view class="tab {{tab === 'active' ? 'active' : ''}}" data-tab="active" bindtap="switchTab">借出中</view>
+    <view class="tab {{tab === 'all' ? 'active' : ''}}" data-tab="all" bindtap="switchTab">全部活动</view>
+  </view>
+
+  <view class="content">
+    <!-- 活动卡片 -->
+    <view class="act-card card" wx:for="{{activities}}" wx:key="id">
+      <!-- 头部 -->
+      <view class="act-header">
+        <view class="act-title-row">
+          <text class="act-name">{{item.activityName}}</text>
+          <view class="status-badge {{item.statusBadgeClass}}">{{item.statusBadgeText}}</view>
+        </view>
+        <view class="act-meta">
+          <text>{{item.organizer}} · {{item.borrower}} · 负责人：{{item.responsiblePerson}}</text>
+        </view>
+        <view class="act-time">{{item.borrowTime}} {{item.weekDay}}</view>
+        <view class="act-contact" wx:if="{{item.contactPerson}}">
+          <text>📞 {{item.contactPerson}} {{item.contactPhone}}</text>
+        </view>
+      </view>
+
+      <!-- 物资清单 -->
+      <view class="act-items">
+        <view class="act-item" wx:for="{{item.items}}" wx:key="id">
+          <text class="ai-name">{{item.materialName}}</text>
+          <text class="ai-qty">
+            借{{item.quantity}}{{item.unit}}
+            <text wx:if="{{item.returnedQuantity > 0}}"> 还{{item.returnedQuantity}}{{item.unit}}</text>
+          </text>
+        </view>
+      </view>
+
+      <!-- 备注 -->
+      <view class="act-note" wx:if="{{item.note}}">
+        <text>📝 {{item.note}}</text>
+      </view>
+      <view class="act-note" wx:if="{{item.extraNote}}">
+        <text>📌 {{item.extraNote}}</text>
+      </view>
+      <view class="act-note" wx:if="{{item.handler}}">
+        <text>👤 处理人：{{item.handler}}</text>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="act-actions" wx:if="{{isAssistant && (item.status === 'active' || item.status === 'partial' || item.status === 'special')}}">
+        <button class="action-btn return-action" data-id="{{item.id}}" bindtap="openReturn">归还物资</button>
+        <button class="action-btn special-action" data-id="{{item.id}}" bindtap="openSpecial">其他处理</button>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{activities.length === 0}}">
+      <text class="empty-text">{{tab === 'active' ? '全部已归还' : '暂无活动记录'}}</text>
+    </view>
+  </view>
+
+  <!-- 归还弹窗 -->
+  <view class="modal-mask {{showReturnModal ? 'visible' : ''}}" bindtap="closeReturn"></view>
+  <view class="modal {{showReturnModal ? 'visible' : ''}}">
+    <view class="modal-header">
+      <text class="modal-title">归还 — {{returnActivity.activityName}}</text>
+      <text class="modal-close" bindtap="closeReturn">✕</text>
+    </view>
+
+    <view class="modal-body" wx:if="{{returnActivity}}">
+      <view class="modal-info">
+        <text>{{returnActivity.borrower}} · {{returnActivity.responsiblePerson}} · {{returnActivity.borrowTime}}</text>
+      </view>
+
+      <view class="return-items">
+        <view class="return-item" wx:for="{{returnItems}}" wx:key="id">
+          <view class="ri-info">
+            <text class="ri-name">{{item.materialName}}</text>
+            <text class="ri-label">已借 {{item.quantity}}{{item.unit}}，已还 {{item.returnedQuantity}}{{item.unit}}</text>
+          </view>
+          <view class="ri-controls">
+            <input cursor-spacing="300" class="ri-input" type="number" value="{{item.returnQty}}"
+              data-id="{{item.id}}" bindinput="onReturnQtyInput" />
+            <text class="ri-unit">{{item.unit}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">接收人 <text class="required">*</text></text>
+        <input cursor-spacing="300" class="form-input" type="text" placeholder="姓名" placeholder-class="ph"
+          value="{{receiver}}" bindinput="onReceiverInput" />
+      </view>
+      <view class="form-group">
+        <text class="form-label">备注</text>
+        <input cursor-spacing="300" class="form-input" type="text" placeholder="归还情况备注" placeholder-class="ph"
+          value="{{returnNote}}" bindinput="onReturnNoteInput" />
+      </view>
+    </view>
+
+    <view class="modal-footer">
+      <button class="modal-btn cancel" bindtap="closeReturn">取消</button>
+      <button class="modal-btn confirm" bindtap="confirmReturn" disabled="{{saving}}">
+        {{saving ? '处理中...' : '确认归还'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 其他处理弹窗 -->
+  <view class="modal-mask {{showSpecialModal ? 'visible' : ''}}" bindtap="closeSpecial"></view>
+  <view class="modal {{showSpecialModal ? 'visible' : ''}}">
+    <view class="modal-header">
+      <text class="modal-title">其他处理 — {{specialActivity.activityName}}</text>
+      <text class="modal-close" bindtap="closeSpecial">✕</text>
+    </view>
+
+    <view class="modal-body" wx:if="{{specialActivity}}">
+      <view class="modal-info">
+        <text>此操作不会归还物资，仅标记活动状态</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">处理人 <text class="required">*</text></text>
+        <input cursor-spacing="300" class="form-input" type="text" placeholder="处理人姓名" placeholder-class="ph"
+          value="{{specialHandler}}" bindinput="onSpecialHandlerInput" />
+      </view>
+      <view class="form-group">
+        <text class="form-label">处理说明</text>
+        <input cursor-spacing="300" class="form-input" type="text" placeholder="如：物资已丢失，待报损" placeholder-class="ph"
+          value="{{specialNote}}" bindinput="onSpecialNoteInput" />
+      </view>
+    </view>
+
+    <view class="modal-footer footer-col-2">
+      <button class="modal-btn special-mark" bindtap="markSpecial">标记为特殊</button>
+      <button class="modal-btn resolve-mark" bindtap="markResolved">标记为已处理</button>
+    </view>
+  </view>
+
+  <view class="bottom-safe"></view>
+</scroll-view>

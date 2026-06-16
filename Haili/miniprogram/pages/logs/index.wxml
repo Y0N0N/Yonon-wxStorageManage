@@ -1,0 +1,54 @@
+<scroll-view class="page" scroll-y="true">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="goBack"><text>‹ 返回</text></view>
+    <text class="nav-title">操作日志</text>
+    <view class="nav-right"></view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <view class="filters">
+    <scroll-view class="filter-scroll" scroll-x="true" show-scrollbar="{{false}}">
+      <view class="filter-inner">
+        <view class="filter-chip {{activeFilter === item.key ? 'active' : ''}}"
+          wx:for="{{typeFilters}}" wx:key="key"
+          data-key="{{item.key}}" bindtap="onFilter">
+          {{item.label}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="content">
+    <view class="log-card card" wx:for="{{logs}}" wx:key="id"
+      data-id="{{item.id}}" bindtap="onLogTap">
+
+      <!-- 标题行：仅显示活动名称 -->
+      <view class="log-title">
+        <text class="log-icon">{{item.icon}}</text>
+        <text class="log-brief text-ellipsis">「{{item.displayTitle}}」</text>
+      </view>
+
+      <!-- 元信息 -->
+      <view class="log-meta-row">
+        <text class="log-operator">{{item.operatorName}}</text>
+        <text class="meta-sep">|</text>
+        <text class="log-type-tag">{{item.label}}</text>
+        <text class="meta-sep">|</text>
+        <text class="log-time">{{item.timestamp}} {{item.weekDay}}</text>
+      </view>
+
+      <!-- 负责人信息（借出/归还是有） -->
+      <view class="log-related" wx:if="{{item.relatedPerson && (item.operationType === 'activity_borrow' || item.operationType === 'activity_return')}}">
+        <text class="related-text">{{item.relatedPerson}}</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{logs.length === 0 && !loading}}">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无操作记录</text>
+    </view>
+  </view>
+
+  <view class="bottom-safe"></view>
+</scroll-view>

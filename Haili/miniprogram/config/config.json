@@ -1,0 +1,32 @@
+{
+  "note": "本文件仅用于记录测试账号信息，不参与程序逻辑",
+  "accounts": {
+    "admin": {
+      "username": "admin",
+      "password": "admin123",
+      "name": "管理员",
+      "role": "管理员",
+      "description": "可查看所有数据、管理学生助理账号，不可操作物资"
+    },
+    "assistants": [
+      {
+        "username": "zhang",
+        "password": "123456",
+        "name": "张助理",
+        "description": "学生助理，可借出/归还/管理物资"
+      },
+      {
+        "username": "li",
+        "password": "123456",
+        "name": "李助理",
+        "description": "学生助理，可借出/归还/管理物资"
+      },
+      {
+        "username": "wang",
+        "password": "123456",
+        "name": "王助理",
+        "description": "学生助理，可借出/归还/管理物资"
+      }
+    ]
+  }
+}

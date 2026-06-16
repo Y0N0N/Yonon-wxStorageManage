@@ -1,0 +1,77 @@
+/* 全局样式 — Haili 物资管理小程序 */
+
+/* CSS 变量 */
+page {
+  --color-primary: #4A90D9;
+  --color-primary-light: #E8F0FE;
+  --color-success: #52C41A;
+  --color-warning: #FAAD14;
+  --color-danger: #FF4D4F;
+  --color-bg: #F5F7FA;
+  --color-card: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #666666;
+  --color-text-light: #999999;
+  --color-border: #E8E8E8;
+  --radius-sm: 8rpx;
+  --radius-md: 12rpx;
+  --radius-lg: 16rpx;
+  --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8rpx 32rpx rgba(0, 0, 0, 0.10);
+  --font-sm: 24rpx;
+  --font-md: 28rpx;
+  --font-lg: 32rpx;
+  --font-xl: 36rpx;
+  --font-xxl: 48rpx;
+  --spacing-xs: 8rpx;
+  --spacing-sm: 16rpx;
+  --spacing-md: 24rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 48rpx;
+}
+
+/* 页面基础 */
+page {
+  background-color: var(--color-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: var(--font-md);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* 实用工具类 */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 卡片样式 */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  margin: 0 var(--spacing-md) var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+}

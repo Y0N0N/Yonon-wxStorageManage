@@ -1,0 +1,116 @@
+<scroll-view class="dashboard" scroll-y="true" scroll-with-animation="{{true}}">
+  <!-- 顶部导航栏 -->
+  <view class="header">
+    <view class="header-left">
+      <text class="header-title">Haili</text>
+      <text class="header-subtitle">物资管理</text>
+    </view>
+    <view class="header-right">
+      <text class="logout-text" bindtap="onLogout">退出</text>
+    </view>
+  </view>
+
+  <!-- 用户信息 -->
+  <view class="user-info-bar">
+    <text class="user-info-name">{{user.name}}</text>
+    <view class="user-info-role {{isAdmin ? 'role-admin' : 'role-assistant'}}">
+      {{isAdmin ? '管理员' : '学生助理'}}
+    </view>
+  </view>
+
+  <!-- 统计卡片：两列 -->
+  <view class="stats-row">
+    <view class="stat-card stat-orange">
+      <view class="stat-value">{{stats.activeActivities}}</view>
+      <view class="stat-label">📋 借出中活动</view>
+    </view>
+    <view class="stat-card {{stats.overdueCount > 0 ? 'stat-red' : 'stat-gray'}}">
+      <view class="stat-value">{{stats.overdueCount}}</view>
+      <view class="stat-label">⏰ 逾期未还</view>
+    </view>
+  </view>
+
+  <!-- 类别统计 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">类别概况</text>
+    </view>
+    <view class="category-list card">
+      <view class="category-item" wx:for="{{categoryStats}}" wx:key="category">
+        <view class="category-left">
+          <text class="category-name">{{item.category}}</text>
+        </view>
+        <view class="category-right">
+          <text class="category-stock">在库: <text class="num">{{item.stock}}</text></text>
+          <text class="category-divider">|</text>
+          <text class="category-total">总计: {{item.count}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">快捷操作</text>
+    </view>
+    <view class="action-grid">
+      <!-- 仅学生助理可见的操作 -->
+      <view class="action-card" wx:if="{{isAssistant}}" bindtap="goToBorrow">
+        <text class="action-icon">📤</text>
+        <text class="action-text">借出物资</text>
+      </view>
+      <view class="action-card" wx:if="{{isAssistant}}" bindtap="goToBorrowList">
+        <text class="action-icon">📥</text>
+        <text class="action-text">归还物资</text>
+      </view>
+      <view class="action-card" wx:if="{{isAssistant}}" bindtap="goToMaterials">
+        <text class="action-icon">✏️</text>
+        <text class="action-text">管理物资</text>
+      </view>
+      <!-- 管理员操作 -->
+      <view class="action-card" wx:if="{{isAdmin}}" bindtap="goToUsers">
+        <text class="action-icon">👥</text>
+        <text class="action-text">账号管理</text>
+      </view>
+      <!-- 通用操作 -->
+      <view class="action-card" bindtap="goToLogs">
+        <text class="action-icon">📋</text>
+        <text class="action-text">操作日志</text>
+      </view>
+      <view class="action-card" bindtap="goToMaterials">
+        <text class="action-icon">📦</text>
+        <text class="action-text">物资目录</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近动态 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">最近动态</text>
+      <text class="section-more" bindtap="goToLogs">查看全部 →</text>
+    </view>
+    <view class="timeline card" wx:if="{{recentLogs.length > 0}}">
+      <view class="timeline-item" wx:for="{{recentLogs}}" wx:key="id">
+        <view class="timeline-dot"></view>
+        <view class="timeline-content">
+          <view class="timeline-header">
+            <text class="timeline-icon">{{item.icon}}</text>
+            <text class="timeline-detail text-ellipsis">{{item.detail}}</text>
+          </view>
+          <view class="timeline-meta">
+            <text class="timeline-operator">{{item.operatorName}}</text>
+            <text class="timeline-time">{{item.timestamp}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="empty-hint card" wx:else>
+      <text>暂无操作记录</text>
+    </view>
+  </view>
+
+  <!-- 底部安全区 -->
+  <view class="bottom-safe"></view>
+</scroll-view>

@@ -1,0 +1,53 @@
+<view class="login-page">
+  <view class="login-container">
+    <!-- Logo / 标题 -->
+    <view class="login-header">
+      <view class="login-icon">📦</view>
+      <view class="login-title">Haili 物资管理</view>
+      <view class="login-subtitle">办公室物资管理助手</view>
+    </view>
+
+    <!-- 登录表单 -->
+    <view class="login-form">
+      <view class="form-group">
+        <text class="form-label">账号</text>
+        <input
+          class="form-input"
+          type="text"
+          placeholder="请输入账号"
+          placeholder-class="placeholder"
+          value="{{username}}"
+          bindinput="onUsernameInput"
+          focus="{{true}}"
+        />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">密码</text>
+        <input
+          class="form-input"
+          type="text"
+          password="{{true}}"
+          placeholder="请输入密码"
+          placeholder-class="placeholder"
+          value="{{password}}"
+          bindinput="onPasswordInput"
+        />
+      </view>
+
+      <button
+        class="login-btn {{loading ? 'loading' : ''}}"
+        bindtap="onLogin"
+        disabled="{{loading}}"
+      >
+        <text wx:if="{{loading}}">登录中...</text>
+        <text wx:else>登 录</text>
+      </button>
+    </view>
+
+    <!-- 底部提示 -->
+    <view class="login-footer">
+      <text>管理员：admin ｜ 助理：zhang / li / wang</text>
+    </view>
+  </view>
+</view>

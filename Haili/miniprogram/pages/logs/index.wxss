@@ -1,0 +1,83 @@
+.page { height: 100vh; background: var(--color-bg); }
+
+.nav-bar {
+  display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+  padding: 96rpx var(--spacing-md) var(--spacing-sm); background: #fff;
+  border-bottom: 1rpx solid var(--color-border);
+}
+.nav-back { font-size: var(--font-lg); color: var(--color-primary); padding: 8rpx 0; }
+.nav-title { font-size: var(--font-xl); font-weight: 600; }
+.nav-right { width: 80rpx; }
+
+/* 筛选 */
+.filters {
+  background: #fff; padding: var(--spacing-sm) 0;
+  border-bottom: 1rpx solid var(--color-border);
+}
+.filter-scroll { white-space: nowrap; }
+.filter-inner { display: flex; flex-direction: row; padding: 0 var(--spacing-md); gap: var(--spacing-sm); }
+.filter-chip {
+  display: inline-block; padding: 12rpx 28rpx;
+  border-radius: 40rpx; font-size: var(--font-sm);
+  color: var(--color-text-secondary); background: var(--color-bg);
+  white-space: nowrap;
+}
+.filter-chip.active { background: var(--color-primary); color: #fff; font-weight: 500; }
+.filter-chip:active { opacity: 0.8; }
+
+/* 日志卡片 */
+.content { padding: var(--spacing-sm) var(--spacing-md); }
+
+.log-card {
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+.log-card:active { opacity: 0.7; }
+
+.log-title {
+  display: flex; flex-direction: row; align-items: center;
+  gap: 12rpx; margin-bottom: 12rpx;
+}
+
+.log-icon {
+  width: 48rpx; height: 48rpx; border-radius: 50%;
+  background: var(--color-bg); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 28rpx; flex-shrink: 0;
+}
+
+.log-brief {
+  font-size: var(--font-md); font-weight: 500;
+  color: var(--color-text); flex: 1; line-height: 1.5;
+}
+
+/* 元信息行 */
+.log-meta-row {
+  display: flex; flex-direction: row; align-items: center;
+  gap: 12rpx; flex-wrap: wrap;
+}
+
+.log-operator { font-size: 22rpx; color: var(--color-primary); font-weight: 500; }
+.meta-sep { font-size: 20rpx; color: var(--color-border); }
+.log-type-tag {
+  font-size: 20rpx; color: var(--color-text-light);
+  background: var(--color-bg); padding: 2rpx 14rpx; border-radius: 16rpx;
+}
+.log-time { font-size: 22rpx; color: var(--color-text-light); }
+
+/* 关联信息 */
+.log-extra {
+  display: flex; flex-direction: row; align-items: center;
+  gap: var(--spacing-sm); margin-top: 8rpx;
+  padding-top: 8rpx; border-top: 1rpx solid var(--color-border);
+  font-size: 22rpx;
+}
+.extra-label { color: var(--color-text-secondary); }
+.extra-borrower { color: var(--color-text-light); }
+
+/* 空状态 */
+.empty { display: flex; flex-direction: column; align-items: center; padding: var(--spacing-xl) 0; }
+.empty-icon { font-size: 80rpx; }
+.empty-text { font-size: var(--font-md); color: var(--color-text-light); margin-top: var(--spacing-sm); }
+
+.bottom-safe { height: 40rpx; }
